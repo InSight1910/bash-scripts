@@ -17,8 +17,8 @@ questions2 = [{
     'choices': ['Yes', 'No'],
 }]
  
-def pDir(dirs) -> list:
-    dir_list = [ f for f in dirs]
+def pDir() -> list:
+    dir_list = [ f for f in glob.glob("**/")]
     return dir_list
 
 def continue_navigate():
@@ -27,7 +27,12 @@ def continue_navigate():
     
 def navigate():
     questions1[0]['choices'] = glob.glob('**/')
+    questions1[0]['choices'].insert(0, '.')
+    questions1[0]['choices'].insert(1, '..')
     answer = prompt(questions1)
+    if answer['dir'] == '.': 
+        os.system('explorer.exe .')
+        return
     os.chdir(answer['dir'])
     if continue_navigate():
         try:
@@ -38,4 +43,6 @@ def navigate():
         os.system('explorer.exe .')
 if __name__ == '__main__':
     navigate()
+    
+    
     
